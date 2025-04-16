@@ -17,8 +17,15 @@ infant <- read.csv("./052_Barbados/A4C49D3_3.2.2- Neonatal mortality rate/052_A4
 
 ## i found the shapefile here: https://simplemaps.com/gis/country/bb
 library(sf)
+#shapefile
 barbados <- st_read("./bb_shp/bb.shp")
-library(ggplot2)
-ggplot(data = barbados) +
-  geom_sf() +
-  theme_minimal()
+
+
+
+
+
+library(tmap)
+tm_shape(barbados) + 
+  tm_polygons() + 
+  tm_graticules(lines=FALSE) +
+  tm_fill("name", palette = "Set3")
