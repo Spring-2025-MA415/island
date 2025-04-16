@@ -1,31 +1,24 @@
-## list of possible datasets for Barbados
-## datasets gathered from WHO:
-## https://data.who.int/countries
-## i chose Barbados
+library(tmap)
+library(dplyr)
+library(sf)
+
 
 # maternal mortality rates
-maternal <- read.csv('./052_Barbados/AC597B1_3.1.1 - Maternal mortality ratio/052_AC597B1_Dataset_2023-05-11.csv')
+maternal <- read.csv('./data/AC597B1_3.1.1 - Maternal mortality ratio/052_AC597B1_Dataset_2023-05-11.csv')
 
 # infant mortality rates
-infant <- read.csv("./052_Barbados/A4C49D3_3.2.2- Neonatal mortality rate/052_A4C49D3_Dataset_2024-05-16.csv")
+infant <- read.csv("./data/A4C49D3_3.2.2- Neonatal mortality rate/052_A4C49D3_Dataset_2024-05-16.csv")
 
+# shapefile
+barbados <- st_read("./shapefile/bb.shp")
+barbados <- barbados |> rename(Parish = name,
+                               ID = id, 
+                               Source = source,
+                               Geometry = geometry)
+barbados <- barbados |> arrange(ID)
 
-
-## i can find shapefiles or geojson files on the following sites
-## https://www.naturalearthdata.com/
-## https://www.openstreetmap.org/
-
-## i found the shapefile here: https://simplemaps.com/gis/country/bb
-library(sf)
-#shapefile
-barbados <- st_read("./bb_shp/bb.shp")
-
-
-
-
-
-library(tmap)
+# plotting
 tm_shape(barbados) + 
   tm_polygons() + 
   tm_graticules(lines=FALSE) +
-  tm_fill("name", palette = "Set3")
+  tm_fill("name", palette = "rainbow")

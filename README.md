@@ -1,2 +1,6 @@
 # Island Project
 This repository contains the data I collected for a specific island, Barbados.
+
+I found the shapefile here: https://simplemaps.com/gis/country/bb.
+
+I found all health information regarding Barbados on the WHO website: https://data.who.int/countries/052.
