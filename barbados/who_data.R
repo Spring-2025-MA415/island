@@ -1,40 +1,9 @@
-library(tmap)
 library(dplyr)
-library(sf)
-library(viridis)
-library(paletteer)
-source("helper_functions.R")
 
-# make sure i make good use of shiny
-# data analysis
-# clean code
-# clean repo
-
-################# Mapping #################
-# shapefile
-barbados <- st_read("./shapefile/bb.shp")
-barbados <- barbados |> rename(Parish = name,
-                               ID = id, 
-                               Source = source,
-                               Geometry = geometry)
-barbados <- barbados |> arrange(ID)
-
-# plotting
-map <- tm_shape(barbados) + 
-  tm_polygons(fill = "Parish", 
-              fill.scale = tm_scale(values = paletteer_d("ggsci::category20_d3")[1:11]))
-map
-
-
-
-
-
-
-################# Datasets #################
 
 ####### WHO Data #######
 # data dictionary
-dict <- read.csv("data/data_dictionary.csv")
+dict <- read.csv("data/who_data_dictionary.csv")
 
 # vaccination access
 vaccines <- read.csv("data/Access to affordable medicines and vaccines/dataset.csv")
@@ -46,7 +15,7 @@ tobacco <- read.csv("data/Age-standardized prevalence of tobacco use/dataset.csv
 alcohol <- read.csv("data/Alcohol/dataset.csv")
 
 # attended births
-births <- read.csv("data/Births attended by skilled health personnel/dataset.csv")
+births_attended <- read.csv("data/Births attended by skilled health personnel/dataset.csv")
 
 # diseases
 diseases <- read.csv("data/cardiovascular disease, cancer, diabetes or chronic respiratory disease/dataset.csv")
@@ -128,14 +97,3 @@ unsafe_water <- read.csv("data/Unsafe water, unsafe sanitation and lack of hygie
 
 # women satisfied with modern methods
 women_methods <- read.csv("data/Women satisfied with modern methods/dataset.csv")
-
-
-
-####### UN Data #######
-
-# demographics, contains all UN country data
-demographics <- read.csv("data/WPP2024_Demographic_Indicators_Medium.csv.gz")
-
-# filtering to get all Barbados information
-demographics <- demographics |> filter(Location == "Barbados")
-demographics <- demographics |> drop_one_value_col()
