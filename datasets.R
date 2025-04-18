@@ -3,6 +3,7 @@ library(dplyr)
 library(sf)
 library(viridis)
 library(paletteer)
+source("helper_functions.R")
 
 # make sure i make good use of shiny
 # data analysis
@@ -131,8 +132,10 @@ women_methods <- read.csv("data/Women satisfied with modern methods/dataset.csv"
 
 
 ####### UN Data #######
+
 # demographics, contains all UN country data
 demographics <- read.csv("data/WPP2024_Demographic_Indicators_Medium.csv.gz")
+
 # filtering to get all Barbados information
 demographics <- demographics |> filter(Location == "Barbados")
-
+demographics <- demographics |> drop_one_value_col()
